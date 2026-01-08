@@ -2,7 +2,10 @@ import requests
 import os
 from dotenv import load_dotenv
 import datetime
-import json
+
+from storage import *
+from browser_utils import *
+from test_data import TEST_DATA
 
 load_dotenv()
 
@@ -10,59 +13,35 @@ NASA_API_KEY = os.getenv('NASA_API_KEY')
 BASE_URL = os.getenv('BASE_URL')
 NASA_APOD_START_DATE = datetime.date(1995, 6, 16)
 
-TEST_DATA = {'resource': {
-        'image_set': "apod"
-    },
-    'concept_tags': "True",
-    'date': "2013-10-01",
-    'title': "Filaments of the Vela Supernova Remnant",
-    'url': "http://apod.nasa.gov/apod/image/1310/velafilaments_jadescope_960.jpg",
-    'explanation': ' The explosion is over but the consequences continue. About eleven thousand years ago a star in the constellation of Vela could be seen to explode. BLAH BLAH BLAH asdhjahsdhgjasd asdh.  ajsdjasdj',
-    'concepts': {
-        '0': "Astronomy",
-        '1': "Star",
-        '2': "Sun",
-        '3': "Milky Way",
-        '4': "Hubble Space Telescope",
-        '5': "Earth",
-        '6': "Nebula",
-        '7': "Interstellar medium"
-    }
-}
 
 def get_todays_apod():
     print("Getting today's apod...")
 
     full_url = f"{BASE_URL}?api_key={NASA_API_KEY}"
+    print(full_url)
     response = requests.get(full_url)
     print(response)
-
 
     if response.status_code == 200:
         print("Today's apod was successfully retrieved! 🚀")
         apod_data = response.json()
         apod_data = format_apod_data(apod_data)
 
-        if check_if_data_exists():
-            print("Writing data to csv... 🗄️")
-            log_data_to_csv()
 
-            print("Writing to json... 🗃️")
-            log_data_to_json()
-
-            return apod_data
-
-        else:
-            print("Data directory doesnt exist ❌. Creating Data Directory... ")
+        if not check_if_data_exists():
+            print("Data directory doesnt exist ❌ Creating Data Directory...\n")
             create_data_directory()
 
-            print("Writing data to csv... 🗄️")
-            log_data_to_csv()
+        print("Writing data to csv... 🗄️")
+        log_data_to_csv()
 
-            print("Writing to json... 🗃️")
-            log_data_to_json()
+        print("Writing to json... 🗃️")
+        log_data_to_json()
 
-            return apod_data
+        print("Redirecting user...")
+        take_user_to_browser()
+
+        return apod_data
 
     elif response.status_code == 404 or response.status_code == 403:
         print("This is a user error. Check your API key and try again.")
@@ -157,22 +136,8 @@ def format_apod_data(apod_data):
 
     explanation = apod_data["explanation"].split(".") # makes a list of all the diff sentences, then we just want to return the first 2 sentences
     explanation = explanation[0].strip(" ") + "." + explanation[1] + "." # First we strip off all white space from before the first sentence, then we manually add periods right after each sentence.
-    print(explanation)
 
     dict_to_return = {'date': apod_data['date'], 'title': apod_data['title'], 'url': apod_data['url'],
                       'explanation': explanation, 'logged_at': cur_time}
 
     return dict_to_return
-
-
-def log_data_to_json():
-    pass
-
-def log_data_to_csv():
-    pass
-
-def check_if_data_exists():
-    return False
-
-def create_data_directory():
-    pass
