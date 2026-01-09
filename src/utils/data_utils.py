@@ -18,9 +18,9 @@ TEST_DATA = {'resource': {
     },
     'concept_tags': "True",
     'date': "2013-10-01",
-    'title': "Filaments of the Vela Supernova Remnant",
+    'title': "Earth at Night",
     'url': "http://apod.nasa.gov/apod/image/1310/velafilaments_jadescope_960.jpg",
-    'explanation': ' The explosion is over but the consequences continue. About eleven thousand years ago a star in the constellation of Vela could be seen to explode. BLAH BLAH BLAH asdhjahsdhgjasd asdh.  ajsdjasdj',
+    'explanation': 'The explosion is over but the consequences continue. About eleven thousand years ago a star in the constellation of Vela could be seen to explode. BLAH BLAH BLAH asdhjahsdhgjasd asdh.  ajsdjasdj',
     'concepts': {
         '0': "Astronomy",
         '1': "Star",
@@ -39,8 +39,8 @@ TEST_DATA2 = {'resource': {
     'concept_tags': "True",
     'date': "2011-11-02",
     'title': "Filaments of the Vela ",
-    'url': "http://apod.nasa.gov/apod/image/1310/velafilaments_jadescope_960.jpg",
-    'explanation': ' The explosion is over but the consequences continue. About eleven thousand years ago a star in the constellation of Vela could be seen to explode. BLAH BLAH BLAH asdhjahsdhgjasd asdh.  ajsdjasdj',
+    'url': "https://apod.nasa.gov/apod/image/1707/EarthAtNight_SuomiNPP_1080.jpg",
+    'explanation': "Can you find your favorite country or city?  Surprisingly, on this world-wide nightscape, city lights make this task quite possible.  Human-made lights highlight particularly developed or populated areas of the Earth's surface, including the seaboards of Europe, the eastern United States, and Japan.  Many large cities are located near rivers or oceans so that they can exchange goods cheaply by boat.  Particularly dark areas include the central parts of South America, Africa, Asia, and Australia.  The featured composite was created from images that were collected during cloud-free periods in April and October 2012 by the Suomi-NPP satellite, from a polar orbit about 824 kilometers above the surface, using its Visible Infrared Imaging Radiometer Suite (VIIRS).",
     'concepts': {
         '0': "Astronomy",
         '1': "Star",

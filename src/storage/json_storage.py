@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 from data_storage import DIR_PATH
-from utils.data_utils import FORMATTED_TEST_DATA, FORMATTED_TEST_DATA2
+from src.utils.data_utils import *
 
 json_file_path = f"{DIR_PATH}/data/output.jsonl"
 
@@ -22,10 +22,31 @@ def create_json_output_file():
     Path(f"{json_file_path}").touch()
     print(f"output.jsonl file created at {json_file_path} ✅")
 
+# Wrong right now, this isnt executing not sure why
+def check_for_duplicate_json_entries(formatted_apod_data):
+    try:
+        with open(file=json_file_path, mode='r', encoding='utf-8') as json_file:
+            content = json.load(json_file)
+            print(content)
+            print("CHECK IS HAPPENING")
+            for entry in content:
+                if formatted_apod_data['title'] == entry['title']:
+                    return True
+
+    except PermissionError:
+        print(f"Dont have permission to read from {json_file_path}.")
+    except Exception as e:
+        print(e)
+
+    return False
 
 def log_data_to_json(formatted_apod_data):
     if not check_if_json_output_exists():
         print(f"json file {json_file_path} does not exist ❌. Create it before proceeding.")
+        return
+
+    if check_for_duplicate_json_entries(formatted_apod_data):
+        print("This entry has already been logged. Not logging again.")
         return
 
     try:
@@ -37,3 +58,12 @@ def log_data_to_json(formatted_apod_data):
     except Exception as e:
         print(e)
 
+
+def clear_json_output_file():
+    pass
+
+
+def delete_json_output_file():
+    pass
+
+log_data_to_json(FORMATTED_TEST_DATA)

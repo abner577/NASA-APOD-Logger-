@@ -1,7 +1,7 @@
 from pathlib import Path
 import csv
 from data_storage import DIR_PATH
-from utils.data_utils import FORMATTED_TEST_DATA, FORMATTED_TEST_DATA2
+from src.utils.data_utils import *
 
 csv_file_path = f"{DIR_PATH}/data/output.csv"
 
@@ -37,3 +37,17 @@ def log_data_to_csv(formatted_apod_data):
         print(f"Dont have permission to write to {csv_file_path}.")
     except Exception as e:
         print(e)
+
+
+def check_for_duplicate_csv_entries():
+    pass
+
+
+
+def clear_csv_output_file():
+    pass
+
+
+
+def delete_csv_output_file():
+    pass

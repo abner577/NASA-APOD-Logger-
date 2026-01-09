@@ -3,8 +3,10 @@ import os
 from dotenv import load_dotenv
 
 from storage.data_storage import *
-from utils.browser_utils import *
-from utils.data_utils import *
+from src.storage.csv_storage import *
+from src.storage.json_storage import *
+from src.utils.browser_utils import *
+from src.utils.data_utils import *
 
 load_dotenv()
 
