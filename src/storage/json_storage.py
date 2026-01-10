@@ -9,10 +9,10 @@ json_file_name = "output.jsonl"
 
 def check_if_json_output_exists():
     if Path(json_file_path).exists() and Path(json_file_path).is_file():
-        print(f"File: '{json_file_name}' at path: '{json_file_path}' exists ✅.")
+        print(f"File: '{json_file_name}' at path: '{json_file_path}' found ✅.")
         return True
 
-    print(f"File: '{json_file_name}' at path: '{json_file_path}' doest exist ❌.")
+    print(f"File: '{json_file_name}' at path: '{json_file_path}' not found ❌.")
     return False
 
 
@@ -49,7 +49,6 @@ def check_for_duplicate_json_entries(formatted_apod_data):
 
 def log_data_to_json(formatted_apod_data):
     if not check_if_json_output_exists():
-        print(f"json file '{json_file_path}' does not exist ❌. Create it before proceeding...")
         return
 
     if check_for_duplicate_json_entries(formatted_apod_data):
@@ -69,7 +68,7 @@ def log_data_to_json(formatted_apod_data):
 def clear_json_output_file():
     try:
         with open(file=json_file_path, mode='w') as json_file:
-            print(f"Successfully cleared '{json_file_name}' ✅")
+            print(f"Successfully cleared file: '{json_file_name}' ✅")
 
     except PermissionError:
         print(f"Dont have permission to write to file: '{json_file_name}' at path: '{json_file_path}'.")
@@ -79,7 +78,6 @@ def clear_json_output_file():
 
 def delete_json_output_file():
     Path(f"{json_file_path}").unlink()
-    print(f"File: {json_file_name} at path: '{json_file_path}' deleted.")
+    print(f"File: {json_file_name} at path: '{json_file_path}' deleted ✅.")
 
-
-create_json_output_file()
+log_data_to_json(FORMATTED_TEST_DATA)
