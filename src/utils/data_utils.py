@@ -7,7 +7,11 @@ def format_apod_data(apod_data):
     explanation = apod_data["explanation"].split(".") # makes a list of all the diff sentences, then we just want to return the first 2 sentences
     explanation = explanation[0].strip(" ") + "." + explanation[1] + "." # First we strip off all white space from before the first sentence, then we manually add periods right after each sentence.
 
-    dict_to_return = {'date': apod_data['date'], 'title': apod_data['title'], 'url': apod_data['url'],
+    date = apod_data["date"].strip()
+    title = apod_data["title"].strip()
+    url = apod_data["url"].strip()
+
+    dict_to_return = {'date': date, 'title': title, 'url': url,
                       'explanation': explanation, 'logged_at': cur_time}
 
     return dict_to_return
@@ -38,7 +42,7 @@ TEST_DATA2 = {'resource': {
     },
     'concept_tags': "True",
     'date': "2011-11-02",
-    'title': "Filaments of the Vela ",
+    'title': "Filaments of the Vela",
     'url': "https://apod.nasa.gov/apod/image/1707/EarthAtNight_SuomiNPP_1080.jpg",
     'explanation': "Can you find your favorite country or city?  Surprisingly, on this world-wide nightscape, city lights make this task quite possible.  Human-made lights highlight particularly developed or populated areas of the Earth's surface, including the seaboards of Europe, the eastern United States, and Japan.  Many large cities are located near rivers or oceans so that they can exchange goods cheaply by boat.  Particularly dark areas include the central parts of South America, Africa, Asia, and Australia.  The featured composite was created from images that were collected during cloud-free periods in April and October 2012 by the Suomi-NPP satellite, from a polar orbit about 824 kilometers above the surface, using its Visible Infrared Imaging Radiometer Suite (VIIRS).",
     'concepts': {

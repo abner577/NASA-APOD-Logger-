@@ -80,4 +80,66 @@ def delete_json_output_file():
     Path(f"{json_file_path}").unlink()
     print(f"File: {json_file_name} at path: '{json_file_path}' deleted ✅.")
 
-log_data_to_json(FORMATTED_TEST_DATA)
+
+def show_first_n_log_entries(entries_amount):
+    if entries_amount < 1:
+        print("Amount of entries cannot be less than 1.")
+        return
+
+    count = 0
+    entry_counter = 0
+
+    if not check_if_json_output_exists():
+        return
+
+    try:
+        with open(file=json_file_path, mode='r') as json_file:
+            for line in json_file:
+                entry_counter += 1
+
+
+    except PermissionError:
+        print(f"Dont have permission to read file: '{json_file_name}' at path: '{json_file_path}'.")
+
+    except json.decoder.JSONDecodeError:
+        print(f"Could not decode JSON from file '{json_file}'. Check the file format.")
+
+    except Exception as e:
+        print(e)
+
+    if entries_amount > entry_counter:
+        print(f"We only have {entry_counter} entries in total. Displaying all the entries that we have...")
+        entries_amount = entry_counter
+
+    try:
+        with open(file=json_file_path, mode='r') as json_file:
+            for line in json_file:
+                if line is None or len(line) == 0:
+                    continue
+
+                content = json.loads(line)
+                format_raw_jsonl_entry(content, count)
+                count += 1
+                if count == entries_amount:
+                    break
+
+    except PermissionError:
+        print(f"Dont have permission to read file: '{json_file_name}' at path: '{json_file_path}'.")
+
+    except json.decoder.JSONDecodeError:
+        print(f"Could not decode JSON from file '{json_file}'. Check the file format.")
+
+    except Exception as e:
+        print(e)
+
+
+def format_raw_jsonl_entry(formatted_jsonl_entry, count):
+    print(f"=====================================")
+    print(f"Entry #{count} ({formatted_jsonl_entry['title']}):")
+    print(f"Date: {formatted_jsonl_entry['date']}\n"
+          f"Title: {formatted_jsonl_entry['title']}\n"
+          f"Url: {formatted_jsonl_entry['url']}\n"
+          f"Explanation: {formatted_jsonl_entry['explanation']}\n"
+          f"Logged_At: {formatted_jsonl_entry['logged_at']}")
+
+
