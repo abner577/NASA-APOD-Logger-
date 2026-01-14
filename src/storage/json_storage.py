@@ -135,14 +135,6 @@ def show_last_n_json_log_entries(entries_amount):
         count += 1
 
 
-def fetch_most_recent_json_apod():
-    pass
-
-
-def fetch_oldest_json_apod():
-    pass
-
-
 def show_all_json_entries():
     if not check_if_json_output_exists():
         return
@@ -184,37 +176,35 @@ def delete_one_json_entry():
     elif date_object > date_today:
         print(f"⚠️ Please enter a date before {date_today}")
 
-    count = 0
+    found = False
+    target_date = date_object.isoformat()
+
     try:
+        # Read phase
         with open(file=json_file_path, mode='r') as json_file:
             for line in json_file:
                 if line is None or len(line) == 0:
                     continue
 
                 content = json.loads(line)
-                count += 1
 
-                if content['date'] == date_object.isoformat():
+                if content['date'] == target_date:
                     print(f"This entry has been found ✅.")
+                    found = True
 
                 else:
                     entries_to_keep.append(content)
 
-            if count == len(entries_to_keep):
+            if not found:
                 print(f"This entry was not found ❌.")
                 return
 
             else:
                 print("Removing entry...")
-                try:
-                    with open(file=json_file_path, mode='w') as file:
-                        for entry in entries_to_keep:
-                            file.write(json.dumps(entry, ensure_ascii=False) + "\n")
-
-                except PermissionError:
-                    print(f"Dont have permission to write to file: '{json_file_name}' at path: '{json_file_path}'.")
-                except Exception as e:
-                    print(e)
+            # Write phase
+            with open(file=json_file_path, mode='w') as file:
+                for entry in entries_to_keep:
+                    file.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     except PermissionError:
         print(f"Dont have permission to read file: '{json_file_name}' at path: '{json_file_path}'.")
@@ -224,4 +214,9 @@ def delete_one_json_entry():
         print(e)
 
 
+def fetch_most_recent_json_apod():
+    pass
 
+
+def fetch_oldest_json_apod():
+    pass

@@ -35,7 +35,7 @@ def log_data_to_csv(formatted_apod_data):
         return
 
     try:
-        with open(file=csv_file_path, mode='a', encoding='utf-8') as csv_file:
+        with open(file=csv_file_path, mode='a', encoding='utf-8', newline="") as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=formatted_apod_data.keys())
             writer.writerow(formatted_apod_data)
             print(f"Successfully logged data to '{csv_file_name}' ✅")
@@ -150,13 +150,6 @@ def show_last_n_csv_log_entries(entries_amount):
         format_raw_csv_entry(entry, count)
         count += 1
 
-def fetch_most_recent_csv_apod():
-    pass
-
-
-def fetch_oldest_csv_apod():
-    pass
-
 
 def show_all_csv_entries():
     if not check_if_csv_output_exists():
@@ -207,7 +200,7 @@ def delete_one_csv_entry():
     found = False
 
     try:
-        # READ PHASE
+        # Read phase
         with open(csv_file_path, mode="r", encoding="utf-8", newline="") as csv_file:
             reader = csv.DictReader(csv_file)
 
@@ -223,7 +216,7 @@ def delete_one_csv_entry():
 
         print("Removing entry...")
 
-        # WRITE PHASE (overwrite file)
+        # Write phase
         with open(csv_file_path, mode="w", encoding="utf-8", newline="") as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=reader.fieldnames)
 
@@ -236,3 +229,11 @@ def delete_one_csv_entry():
         print(f"Dont have permission to read/write '{csv_file_name}' at path: '{csv_file_path}'.")
     except Exception as e:
         print(e)
+
+
+def fetch_most_recent_csv_apod():
+    pass
+
+
+def fetch_oldest_csv_apod():
+    pass
