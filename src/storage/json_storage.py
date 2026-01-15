@@ -1,12 +1,7 @@
-
-from src.storage.data_storage import DIR_PATH
 from src.utils.json_utils import *
 from src.utils.data_utils import *
 from src.utils.date_utils import check_valid_nasa_date
-
-json_file_path = f"{DIR_PATH}/data/output.jsonl"
-json_file_name = "output.jsonl"
-NASA_APOD_START_DATE = datetime.date(1995, 6, 16)
+from src.config import *
 
 
 def create_json_output_file():

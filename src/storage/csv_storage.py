@@ -1,10 +1,10 @@
-from pathlib import Path
 import csv
+
 from src.utils.csv_utils import *
 from src.utils.data_utils import *
+from src.config import DIR_PATH, csv_file_path, csv_file_name, NASA_APOD_START_DATE, DATE_TODAY
+from src.utils.date_utils import check_valid_nasa_date
 
-DIR_PATH = "C://Users/joser/PycharmProjects/NASA-APOD-Logger"
-NASA_APOD_START_DATE = datetime.date(1995, 6, 16)
 
 HEADERS = {
     "date": "",
@@ -13,9 +13,6 @@ HEADERS = {
     "explanation": "",
     "logged_at": "",
 }
-
-csv_file_path = f"{DIR_PATH}/data/output.csv"
-csv_file_name = "output.csv"
 
 
 def create_csv_output_file():
@@ -186,15 +183,12 @@ def delete_one_csv_entry():
     day = int(input("Enter a day (DD): "))
 
     date_object = datetime.date(year, month, day)
-    date_today = datetime.date.today()
+    check_result = check_valid_nasa_date(date_object)
 
-    if date_object < NASA_APOD_START_DATE:
-        print("⚠️ Please enter a date after June 16, 1995")
+    if check_result is not None:
+        print(check_result)
         return
 
-    if date_object > date_today:
-        print(f"⚠️ Please enter a date before {date_today}")
-        return
 
     target_date = date_object.isoformat()
     found = False
@@ -237,3 +231,5 @@ def fetch_most_recent_csv_apod():
 
 def fetch_oldest_csv_apod():
     pass
+
+delete_one_csv_entry()

@@ -1,9 +1,7 @@
-from pathlib import Path
 import csv
 
-DIR_PATH = "C://Users/joser/PycharmProjects/NASA-APOD-Logger"
-csv_file_path = f"{DIR_PATH}/data/output.csv"
-csv_file_name = "output.csv"
+from pathlib import Path
+from src.config import DIR_PATH, csv_file_path, csv_file_name
 
 
 def check_for_duplicate_csv_entries(formatted_apod_data):

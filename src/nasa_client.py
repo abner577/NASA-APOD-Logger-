@@ -12,7 +12,6 @@ load_dotenv()
 
 NASA_API_KEY = os.getenv('NASA_API_KEY')
 BASE_URL = os.getenv('BASE_URL')
-NASA_APOD_START_DATE = datetime.date(1995, 6, 16)
 
 
 def get_todays_apod():

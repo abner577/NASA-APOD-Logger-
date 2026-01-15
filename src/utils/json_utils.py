@@ -1,10 +1,8 @@
 import json
 
-from src.storage.data_storage import DIR_PATH
 from pathlib import Path
+from src.config import DIR_PATH, json_file_path, json_file_name
 
-json_file_path = f"{DIR_PATH}/data/output.jsonl"
-json_file_name = "output.jsonl"
 
 def get_line_count(count):
     try:

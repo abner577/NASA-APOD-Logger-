@@ -1,6 +1,5 @@
 from pathlib import Path
-
-DIR_PATH = "C://Users/joser/PycharmProjects/NASA-APOD-Logger"
+from src.config import DIR_PATH
 
 
 def check_if_data_exists():
