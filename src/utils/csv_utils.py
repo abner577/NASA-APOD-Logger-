@@ -1,3 +1,10 @@
+"""
+csv_utils.py
+
+Helper functions for working with the CSV APOD log.
+Includes duplicate detection, file checks, and display formatting.
+"""
+
 import csv
 
 from pathlib import Path
@@ -5,6 +12,16 @@ from src.config import DIR_PATH, csv_file_path, csv_file_name
 
 
 def check_for_duplicate_csv_entries(formatted_apod_data):
+    """
+       Check whether a CSV entry with the same APOD date already exists.
+
+       Args:
+       formatted_apod_data: A dict containing the APOD snapshot to compare.
+
+       Returns:
+        bool: True if a duplicate date is found, otherwise False.
+    """
+
     try:
         with open(file=csv_file_path, mode='r', encoding='utf-8') as csv_file:
            content = csv.reader(csv_file)
@@ -26,6 +43,13 @@ def check_for_duplicate_csv_entries(formatted_apod_data):
 
 
 def check_if_csv_output_exists():
+    """
+      Check whether the CSV output file exists on disk.
+
+      Returns:
+       bool: True if the file exists, otherwise False.
+    """
+
     if Path(csv_file_path).exists() and Path(csv_file_path).is_file():
         return True
 
@@ -34,6 +58,17 @@ def check_if_csv_output_exists():
 
 
 def format_raw_csv_entry(formatted_csv_entry, count):
+    """
+       Print a single CSV entry in a readable, numbered format.
+
+       Args:
+       formatted_csv_entry: A list representing one CSV row.
+       count: Zero-based index used for display numbering.
+
+       Returns:
+        None:
+    """
+
     print(f"=====================================")
     print(f"Entry #{count + 1} ({formatted_csv_entry[1]}):")
     print(f"Date: {formatted_csv_entry[0]}\n"
@@ -44,6 +79,16 @@ def format_raw_csv_entry(formatted_csv_entry, count):
 
 
 def get_line_count(count):
+    """
+       Count the number of data rows in the CSV file.
+
+       Args:
+       count: Initial count value (typically 0).
+
+       Returns:
+        int: Total number of data rows in the file.
+       """
+
     try:
         with open(file=csv_file_path, mode='r', encoding='utf-8') as csv_file:
             content = csv.reader(csv_file)

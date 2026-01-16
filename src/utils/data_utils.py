@@ -1,3 +1,10 @@
+"""
+data_utils.py
+
+Utility helpers for formatting and preparing APOD data.
+Includes test payloads for when NASA APOD API is down.
+"""
+
 import datetime
 
 TEST_DATA = {'resource': {
@@ -90,6 +97,19 @@ TEST_DATA7 =  {
   }
 
 def format_apod_data(apod_data):
+    """
+      Format raw APOD API data into a normalized snapshot structure.
+
+      Extracts and cleans relevant fields, truncates the explanation,
+      and adds a formatted timestamp for logging.
+
+      Args:
+      apod_data: Raw APOD response dictionary from the NASA API.
+
+      Returns:
+       dict: Formatted APOD snapshot ready for persistence.
+    """
+
     cur_time = datetime.datetime.now()
     cur_time = cur_time.strftime("Day: %m-%d-%Y | Time: %H:%M:%S")
 

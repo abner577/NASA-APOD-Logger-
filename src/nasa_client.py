@@ -31,7 +31,7 @@ def get_todays_apod():
 
        Returns:
             None:
-       """
+    """
 
     print("Getting today's apod...")
 
@@ -75,7 +75,7 @@ def get_apod_for_specific_day():
 
        Returns:
          None:
-       """
+    """
 
     flag = True
     while flag:
@@ -125,7 +125,6 @@ def get_apod_for_specific_day():
 
                     elif response.status_code == 404 or response.status_code == 403:
                         print("🚫 This is a user error. Check your API key and try again.")
-
                     elif response.status_code == 500 or response.status_code == 503 or response.status_code == 504:
                         print("⚠️ This is a server error. Try again later.")
 
@@ -147,5 +146,4 @@ def get_random_n_apods():
     Returns:
         None:
     """
-
     pass

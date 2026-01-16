@@ -17,4 +17,3 @@ csv_file_name = "output.csv"
 
 NASA_APOD_START_DATE = datetime.date(1995, 6, 16)
 DATE_TODAY = datetime.date.today()
-

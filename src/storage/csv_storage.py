@@ -27,7 +27,7 @@ def create_csv_output_file():
 
      Returns:
          None:
-     """
+    """
 
     if check_if_csv_output_exists():
         return
@@ -46,7 +46,7 @@ def log_data_to_csv(formatted_apod_data):
 
        Returns:
         None:
-       """
+    """
 
     if not check_if_csv_output_exists():
         return
@@ -74,7 +74,7 @@ def clear_csv_output_file():
 
        Returns:
            None:
-       """
+    """
 
     try:
         with open(file=csv_file_path, mode='w', encoding='utf-8') as csv_file:
@@ -92,7 +92,7 @@ def delete_csv_output_file():
 
        Returns:
            None:
-       """
+    """
 
     Path(f"{csv_file_path}").unlink()
     print(f"File: '{csv_file_name}' at path: '{csv_file_path}' deleted ✅.")
@@ -126,7 +126,7 @@ def show_first_n_csv_log_entries(entries_amount):
 
      Returns:
         None:
-     """
+    """
 
     if entries_amount < 1:
         print("Amount of entries cannot be less than 1 ❌")
@@ -171,7 +171,7 @@ def show_last_n_csv_log_entries(entries_amount):
 
         Returns:
             None:
-        """
+    """
 
     entries_list = []
 
@@ -221,7 +221,7 @@ def show_all_csv_entries():
 
       Returns:
           None:
-      """
+    """
 
     if not check_if_csv_output_exists():
         return
@@ -254,7 +254,7 @@ def delete_one_csv_entry():
 
         Returns:
             None:
-        """
+    """
 
     entries_to_keep = []
 
@@ -324,12 +324,23 @@ def fetch_most_recent_csv_apod():
 
 def fetch_oldest_csv_apod():
     """
-          Fetch the oldest APOD (by date) from the CSV log.
-          Doesn't matter in which order it was logged.
-          Ex: First APOD ever uploaded will always be the oldest.
+        Fetch the oldest APOD (by date) from the CSV log.
+        Doesn't matter in which order it was logged.
+        Ex: First APOD ever uploaded will always be the oldest.
 
-          Returns:
-              None:
-          """
+        Returns:
+            None:
+    """
+
+    pass
+
+
+def log_multiple_csv_entries():
+    """
+       Log multiple APOD entries to csv.
+
+       Returns:
+           None:
+    """
 
     pass

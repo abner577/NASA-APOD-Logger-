@@ -1,3 +1,10 @@
+"""
+json_storage.py
+
+JSONL persistence layer for APOD snapshots.
+Responsible for creating, writing, reading, and rewriting the JSONL log.
+"""
+
 from src.utils.json_utils import *
 from src.utils.data_utils import *
 from src.utils.date_utils import check_valid_nasa_date
@@ -5,6 +12,13 @@ from src.config import *
 
 
 def create_json_output_file():
+    """
+     Create the JSONL output file if it does not already exist.
+
+     Returns:
+      None:
+    """
+
     if check_if_json_output_exists():
         print(f"Cannot create file at '{json_file_path}' because it already exists ❌")
         return
@@ -14,6 +28,16 @@ def create_json_output_file():
 
 
 def log_data_to_json(formatted_apod_data):
+    """
+       Append a formatted APOD snapshot to the JSONL log.
+
+       Args:
+       formatted_apod_data: A dict containing the snapshot fields to write.
+
+       Returns:
+        None:
+    """
+
     if not check_if_json_output_exists():
         return
 
@@ -22,6 +46,8 @@ def log_data_to_json(formatted_apod_data):
 
     try:
         with open(file=json_file_path, mode='a', encoding='utf-8') as json_file:
+            # One JSON object per line so we can safely append.
+            # Need to use .dumps to write JSON as a string
             json_file.write(json.dumps(formatted_apod_data, ensure_ascii=False) + "\n")
             print(f"Successfully logged data to '{json_file_name}' ✅")
 
@@ -32,6 +58,13 @@ def log_data_to_json(formatted_apod_data):
 
 
 def clear_json_output_file():
+    """
+       Clear (truncate) the JSONL output file contents.
+
+       Returns:
+        None:
+    """
+
     if not check_if_json_output_exists():
         return
 
@@ -46,11 +79,28 @@ def clear_json_output_file():
 
 
 def delete_json_output_file():
+    """
+        Delete the JSONL output file from disk.
+
+        Returns:
+         None:
+    """
+
     Path(f"{json_file_path}").unlink()
     print(f"File: {json_file_name} at path: '{json_file_path}' deleted ✅.")
 
 
 def show_first_n_json_log_entries(entries_amount):
+    """
+        Display the first N logged JSONL entries.
+
+        Args:
+        entries_amount: Number of entries to display.
+
+        Returns:
+         None:
+    """
+
     if entries_amount < 1:
         print("Amount of entries cannot be less than 1.")
         return
@@ -72,6 +122,8 @@ def show_first_n_json_log_entries(entries_amount):
                 if line is None or len(line) == 0:
                     continue
 
+                # Need to use .loads to convert JSON string --> dict
+                # Since we used .dumps we need to use .loads to read the proper format
                 content = json.loads(line)
                 format_raw_jsonl_entry(content, count)
                 count += 1
@@ -87,6 +139,16 @@ def show_first_n_json_log_entries(entries_amount):
 
 
 def show_last_n_json_log_entries(entries_amount):
+    """
+    Display the last N logged JSONL entries.
+
+       Args:
+    entries_amount: Number of entries to display.
+
+       Returns:
+        None:
+    """
+
     entries_list = []
 
     if entries_amount < 1:
@@ -132,6 +194,13 @@ def show_last_n_json_log_entries(entries_amount):
 
 
 def show_all_json_entries():
+    """
+        Display all logged JSONL entries.
+
+    Returns:
+        None:
+    """
+
     if not check_if_json_output_exists():
         return
 
@@ -155,6 +224,16 @@ def show_all_json_entries():
 
 
 def delete_one_json_entry():
+    """
+       Delete a single JSONL entry by its APOD date.
+
+       Prompts the user for a date, removes the matching JSON object, and rewrites
+       the JSONL file with the remaining entries.
+
+       Returns:
+        None:
+    """
+
     entries_to_keep = []
 
     if not check_if_json_output_exists():
@@ -177,6 +256,7 @@ def delete_one_json_entry():
 
     try:
         # Read phase
+        # Need to rewrite the entire file: you can't delete a single JSONL line in-place safely.
         with open(file=json_file_path, mode='r') as json_file:
             for line in json_file:
                 if line is None or len(line) == 0:
@@ -211,13 +291,37 @@ def delete_one_json_entry():
 
 
 def fetch_most_recent_json_apod():
+    """
+         Fetch the most recent APOD (by date) from the jsonl log.
+         Doesn't matter in which order it was logged.
+         Ex: Todays APOD will always be the most recent.
+
+         Returns:
+             None:
+    """
     pass
 
 
 def fetch_oldest_json_apod():
+    """
+        Fetch the oldest APOD (by date) from the CSV log.
+        Doesn't matter in which order it was logged.
+        Ex: First APOD ever uploaded will always be the oldest.
+
+        Returns:
+            None:
+    """
+
     pass
 
 
-def log_multiple_entries():
+def log_multiple_json_entries():
+    """
+       Log multiple APOD entries to jsonl.
+
+       Returns:
+           None:
+    """
+
     pass
 

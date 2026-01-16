@@ -14,7 +14,7 @@ def check_if_data_exists():
 
       Returns:
           bool: True if the data directory exists, otherwise False.
-      """
+    """
 
     if Path(f"{DIR_PATH}/data").is_dir():
         return True
@@ -28,7 +28,7 @@ def create_data_directory():
 
       Returns:
         None:
-      """
+    """
 
     if check_if_data_exists():
         print("Directory 'data' already exists ❌")

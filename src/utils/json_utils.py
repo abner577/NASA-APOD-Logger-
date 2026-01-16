@@ -1,3 +1,10 @@
+"""
+json_utils.py
+
+Helper functions for working with the JSONL APOD log.
+Includes file checks, duplicate detection, and display formatting.
+"""
+
 import json
 
 from pathlib import Path
@@ -5,6 +12,16 @@ from src.config import DIR_PATH, json_file_path, json_file_name
 
 
 def get_line_count(count):
+    """
+      Count the number of lines in the JSONL log file.
+
+      Args:
+      count: Initial count value (typically 0).
+
+      Returns:
+       int: Total number of lines in the file.
+    """
+
     try:
         with open(file=json_file_path, mode='r') as json_file:
             for line in json_file:
@@ -21,6 +38,16 @@ def get_line_count(count):
 
 
 def check_for_duplicate_json_entries(formatted_apod_data):
+    """
+      Check whether a JSONL entry with the same APOD date already exists.
+
+      Args:
+      formatted_apod_data: A dict containing the APOD snapshot to compare.
+
+      Returns:
+       bool: True if a duplicate date is found, otherwise False.
+    """
+
     try:
         with open(file=json_file_path, mode='r') as json_file:
             for line in json_file:
@@ -43,6 +70,13 @@ def check_for_duplicate_json_entries(formatted_apod_data):
 
 
 def check_if_json_output_exists():
+    """
+       Check whether the JSONL output file exists on disk.
+
+       Returns:
+        bool: True if the file exists, otherwise False.
+    """
+
     if Path(json_file_path).exists() and Path(json_file_path).is_file():
         return True
 
@@ -50,6 +84,17 @@ def check_if_json_output_exists():
     return False
 
 def format_raw_jsonl_entry(formatted_jsonl_entry, count):
+    """
+       Print a single JSONL entry in a readable, numbered format.
+
+       Args:
+       formatted_jsonl_entry: A dict representing one JSONL snapshot entry.
+       count: Zero-based index used for display numbering.
+
+       Returns:
+        None:
+    """
+
     print(f"=====================================")
     print(f"Entry #{count + 1} ({formatted_jsonl_entry['title']}):")
     print(f"Date: {formatted_jsonl_entry['date']}\n"
@@ -57,5 +102,3 @@ def format_raw_jsonl_entry(formatted_jsonl_entry, count):
           f"Url: {formatted_jsonl_entry['url']}\n"
           f"Explanation: {formatted_jsonl_entry['explanation']}\n"
           f"Logged_At: {formatted_jsonl_entry['logged_at']}")
-
-
