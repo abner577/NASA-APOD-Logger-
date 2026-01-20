@@ -11,6 +11,55 @@ from pathlib import Path
 from src.config import DIR_PATH, json_file_path, json_file_name
 
 
+def create_json_output_file():
+    """
+     Create the JSONL output file if it does not already exist.
+
+     Returns:
+      None:
+    """
+
+    if check_if_json_output_exists():
+        print(f"Cannot create file at '{json_file_path}' because it already exists ❌")
+        return
+
+    Path(json_file_path).touch()
+    print(f"output.jsonl file created at '{json_file_path}' ✅")
+
+
+def clear_json_output_file():
+    """
+       Clear (truncate) the JSONL output file contents.
+
+       Returns:
+        None:
+    """
+
+    if not check_if_json_output_exists():
+        return
+
+    try:
+        with open(file=json_file_path, mode='w') as json_file:
+            print(f"Successfully cleared file: '{json_file_name}' ✅")
+
+    except PermissionError:
+        print(f"Dont have permission to write to file: '{json_file_name}' at path: '{json_file_path}'.")
+    except Exception as e:
+        print(e)
+
+
+def delete_json_output_file():
+    """
+        Delete the JSONL output file from disk.
+
+        Returns:
+         None:
+    """
+
+    Path(f"{json_file_path}").unlink()
+    print(f"File: {json_file_name} at path: '{json_file_path}' deleted ✅.")
+
+
 def get_line_count(count):
     """
       Count the number of lines in the JSONL log file.
@@ -82,6 +131,7 @@ def check_if_json_output_exists():
 
     print(f"File: '{json_file_name}' at path: '{json_file_path}' not found ❌.")
     return False
+
 
 def format_raw_jsonl_entry(formatted_jsonl_entry, count):
     """

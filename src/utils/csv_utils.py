@@ -11,6 +11,71 @@ from pathlib import Path
 from src.config import DIR_PATH, csv_file_path, csv_file_name
 
 
+def create_csv_output_file():
+    """
+     Create the CSV output file if it does not already exist.
+
+     Returns:
+         None:
+    """
+
+    if check_if_csv_output_exists():
+        return
+
+    Path(csv_file_path).touch()
+    write_header_to_csv()
+    print(f"File: '{csv_file_name}' at path: '{csv_file_path}' created ✅")
+
+
+def clear_csv_output_file():
+    """
+       Clear (truncate) the CSV output file contents.
+
+       Returns:
+           None:
+    """
+
+    try:
+        with open(file=csv_file_path, mode='w', encoding='utf-8') as csv_file:
+            print(f"Successfully cleared file: '{csv_file_name}' ✅")
+
+    except PermissionError:
+        print(f"Dont have permission to write to file: '{csv_file_name}' at path: '{csv_file_path}'.")
+    except Exception as e:
+        print(e)
+
+
+def delete_csv_output_file():
+    """
+       Delete the CSV output file from disk.
+
+       Returns:
+           None:
+    """
+
+    Path(f"{csv_file_path}").unlink()
+    print(f"File: '{csv_file_name}' at path: '{csv_file_path}' deleted ✅.")
+
+
+def write_header_to_csv():
+    """
+    Write the CSV header row to the output file.
+
+    Returns:
+        None:
+    """
+
+    try:
+        with open(file=csv_file_path, mode='a', encoding='utf-8') as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=HEADERS.keys())
+            writer.writeheader()
+
+    except PermissionError:
+        print(f"Dont have permission to write to file: '{csv_file_name}' at path: '{csv_file_path}' ❌")
+    except Exception as e:
+        print(e)
+
+
 def check_for_duplicate_csv_entries(formatted_apod_data):
     """
        Check whether a CSV entry with the same APOD date already exists.

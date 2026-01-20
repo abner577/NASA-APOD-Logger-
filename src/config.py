@@ -15,5 +15,8 @@ json_file_name = "output.jsonl"
 csv_file_path = f"{DIR_PATH}/data/output.csv"
 csv_file_name = "output.csv"
 
+user_settings_path = f"{DIR_PATH}/data/settings.jsonl"
+user_settings_name = "settings.jsonl"
+
 NASA_APOD_START_DATE = datetime.date(1995, 6, 16)
 DATE_TODAY = datetime.date.today()

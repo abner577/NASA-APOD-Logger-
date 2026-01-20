@@ -12,22 +12,6 @@ from src.utils.date_utils import check_valid_nasa_date
 from src.config import *
 
 
-def create_json_output_file():
-    """
-     Create the JSONL output file if it does not already exist.
-
-     Returns:
-      None:
-    """
-
-    if check_if_json_output_exists():
-        print(f"Cannot create file at '{json_file_path}' because it already exists ❌")
-        return
-
-    Path(f"{json_file_path}").touch()
-    print(f"output.jsonl file created at '{json_file_path}' ✅")
-
-
 def log_data_to_json(formatted_apod_data):
     """
        Append a formatted APOD snapshot to the JSONL log.
@@ -58,39 +42,6 @@ def log_data_to_json(formatted_apod_data):
         print(e)
 
     return None
-
-
-def clear_json_output_file():
-    """
-       Clear (truncate) the JSONL output file contents.
-
-       Returns:
-        None:
-    """
-
-    if not check_if_json_output_exists():
-        return
-
-    try:
-        with open(file=json_file_path, mode='w') as json_file:
-            print(f"Successfully cleared file: '{json_file_name}' ✅")
-
-    except PermissionError:
-        print(f"Dont have permission to write to file: '{json_file_name}' at path: '{json_file_path}'.")
-    except Exception as e:
-        print(e)
-
-
-def delete_json_output_file():
-    """
-        Delete the JSONL output file from disk.
-
-        Returns:
-         None:
-    """
-
-    Path(f"{json_file_path}").unlink()
-    print(f"File: {json_file_name} at path: '{json_file_path}' deleted ✅.")
 
 
 def show_first_n_json_log_entries(entries_amount):
