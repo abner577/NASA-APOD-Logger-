@@ -14,6 +14,7 @@ from src.storage.csv_storage import *
 from src.storage.json_storage import *
 from src.utils.browser_utils import *
 from src.utils.data_utils import *
+from src.utils.user_settings import *
 
 load_dotenv()
 
@@ -56,7 +57,11 @@ def get_todays_apod():
         log_data_to_json(apod_data)
 
         redirect_url = apod_data['url']
-        take_user_to_browser(redirect_url)
+
+        if get_user_settings():
+            take_user_to_browser(redirect_url)
+        else:
+            print(f"You can access this APOD at: {redirect_url}\n")
 
     elif response.status_code == 404 or response.status_code == 403:
         print("This is a user error. Check your API key and try again.")
@@ -138,7 +143,11 @@ def get_apod_for_specific_day():
                     log_data_to_json(apod_data)
 
                     redirect_url = apod_data['url']
-                    take_user_to_browser(redirect_url)
+
+                    if get_user_settings():
+                        take_user_to_browser(redirect_url)
+                    else:
+                        print(f"You can access this APOD at: {redirect_url}\n")
 
                 elif response.status_code == 404 or response.status_code == 403:
                     print("🚫 This is a user error. Check your API key and try again.")
@@ -163,7 +172,7 @@ def get_random_n_apods():
     flag = True
     while flag:
         try:
-            user_choice = int(input("Enter (1-2) for one of the options below:\n"
+            user_choice = int(input("\nEnter (1-2) for one of the options below:\n"
                                     "1. Make a request for random APODS\n"
                                     "2. Exit GET random APODS Menu\n"))
 
@@ -206,11 +215,17 @@ def get_random_n_apods():
                         print("Writing to json... 🗃️")
                         log_multiple_csv_entries(list_of_formatted_apod_entries)
 
-                        # This will get replaced by opening all apods in the users browser
-                        # If the user presses yes to be taken to browser
-                        for apod in list_of_formatted_apod_entries:
-                            redirect_url = apod['url']
-                            take_user_to_browser(redirect_url)
+
+                        if get_user_settings():
+                            print()
+                            for apod in list_of_formatted_apod_entries:
+                                redirect_url = apod['url']
+                                take_user_to_browser(redirect_url)
+                        else:
+                            print()
+                            for apod in list_of_formatted_apod_entries:
+                                redirect_url = apod['url']
+                                print(f"You can access this APOD at: {redirect_url}")
 
                     elif response.status_code == 404 or response.status_code == 403:
                         print("This is a user error. Check your API key and try again.")

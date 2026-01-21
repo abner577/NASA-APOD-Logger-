@@ -16,7 +16,7 @@ while flag:
     print('======================= Main Menu =======================\n')
 
     try:
-        print('Pick an option (1-3):')
+        print('Pick an option (1-4):')
         user_choice = int(input("1. Interacting with Nasa APODS menu\n"
                                 "2. Interacting with output files menu\n"
                                 "3. Change Setting\n"

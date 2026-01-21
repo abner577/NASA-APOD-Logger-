@@ -43,6 +43,10 @@ def update_user_settings():
         updated_setting = input(("Enter 'yes' to enable automatic redirect OR "
                                  "Enter 'no' to disable automatic redirect\n"))
 
+        if updated_setting != 'yes' and updated_setting != 'no':
+            print(f"Please enter 'yes' or 'no'")
+            return
+
     except ValueError:
         print("Please enter 'yes' or 'no'")
         return
@@ -67,18 +71,20 @@ def update_user_settings():
 def get_user_settings():
     if not check_if_user_settings_exist():
         print(f"File '{user_settings_name}' does not exist. Create it before proceeding.")
-        return
+        return False
 
     try:
         with open(file=user_settings_path, mode='r', encoding='utf-8') as file:
             for line in file:
                 content = json.loads(line)
                 if content['automatically_redirect'] == 'yes':
-                    print("You will be automatically directed to url's ✅.")
+                    return True
                 else:
-                    print("You wont be automatically directed to url's ❌.")
+                    return False
 
     except PermissionError:
         print(f"Dont have permission to read from file: '{user_settings_name}' ❌.")
     except Exception as e:
         print(e)
+
+    return False

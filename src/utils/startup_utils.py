@@ -1,5 +1,4 @@
 from src.nasa_client import *
-from src.utils.user_settings import *
 
 
 def startup_banner():
@@ -130,7 +129,8 @@ def output_files_menu():
 def user_settings_menu():
     flag = True
     while flag:
-        print('======================= User Settings Menu ========================\n')
+        print('======================= User Settings Menu ========================\n'
+              'Pick an option (1-3):')
 
         try:
             user_choice = int(input("1. Check user setting\n"
@@ -146,7 +146,10 @@ def user_settings_menu():
 
         match user_choice:
             case 1:
-                get_user_settings()
+                if get_user_settings():
+                    print("You will be automatically directed to url's ✅.")
+                else:
+                    print("You wont be automatically directed to url's ❌.")
 
             case 2:
                 update_user_settings()
