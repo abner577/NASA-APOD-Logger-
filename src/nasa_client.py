@@ -47,13 +47,13 @@ def get_todays_apod():
 
 
         if not check_if_data_exists():
-            print("Data directory not found. Creating it now...\n")
+            print("Data directory not found. Creating it...\n")
             create_data_directory()
 
-        print("Saving to CSV log... 🗄️")
+        print("Saving to CSV... 🗄️")
         log_data_to_csv(apod_data)
 
-        print("Saving to JSONL log... 🗃️")
+        print("Saving to JSONL... 🗃️")
         log_data_to_json(apod_data)
 
         redirect_url = apod_data['url']
@@ -64,7 +64,7 @@ def get_todays_apod():
             print(f"APOD link: {redirect_url}\n")
 
     elif response.status_code == 404 or response.status_code == 403:
-        print("Request failed: Check your API key and try again.")
+        print("Request failed: Verify your API key and try again.")
         return
     elif response.status_code == 500 or response.status_code == 503 or response.status_code == 504:
         print("NASA API error: Please try again later.")
@@ -87,24 +87,24 @@ def get_apod_for_specific_day():
 
         # Catch non-numeric input here (e.g., "abc")
         try:
-            user_choice = int(input("Pick an option (1-2):\n"
+            user_choice = int(input("\nSelect an option (1-2):\n"
                                     "1. Enter a date\n"
                                     "2. Back\n"))
         except ValueError:
-            print("Invalid input: Please enter a number (1-2).")
+            print("Invalid input: Please enter 1 or 2.")
             continue
 
         if user_choice != 1 and user_choice != 2:
-            print("Invalid input: Please enter a number (1-2).")
+            print("Invalid input: Please enter 1 or 2.")
             continue
 
         match user_choice:
             case 1:
                 # Catch non-numeric input here (e.g., "Jan")
                 try:
-                    year = int(input("Enter a year (YYYY): "))
-                    month = int(input("Enter a month (MM): "))
-                    day = int(input("Enter a day (DD): "))
+                    year = int(input("Year (YYYY): "))
+                    month = int(input("Month (MM): "))
+                    day = int(input("Day (DD): "))
                 except ValueError:
                     print("Invalid input: Year, month, and day must be numbers.")
                     continue
@@ -123,7 +123,7 @@ def get_apod_for_specific_day():
                     continue
 
                 if not check_if_data_exists():
-                    print('Data directory not found. Creating it now...')
+                    print('Data directory not found. Creating it...')
                     create_data_directory()
 
                 # Valid date at this point
@@ -136,10 +136,10 @@ def get_apod_for_specific_day():
                     apod_data = response.json()
                     apod_data = format_apod_data(apod_data)
 
-                    print("Saving to CSV log... 🗄️")
+                    print("Saving to CSV... 🗄️")
                     log_data_to_csv(apod_data)
 
-                    print("Saving to JSONL log... 🗃️")
+                    print("Saving to JSONL... 🗃️")
                     log_data_to_json(apod_data)
 
                     redirect_url = apod_data['url']
@@ -150,7 +150,7 @@ def get_apod_for_specific_day():
                         print(f"APOD link: {redirect_url}\n")
 
                 elif response.status_code == 404 or response.status_code == 403:
-                    print("Request failed: Check your API key and try again.")
+                    print("Request failed: Verify your API key and try again.")
                 elif response.status_code == 500 or response.status_code == 503 or response.status_code == 504:
                     print("NASA API error: Please try again later.")
 
@@ -172,7 +172,7 @@ def get_random_n_apods():
     flag = True
     while flag:
         try:
-            user_choice = int(input("\nPick an option (1-2):\n"
+            user_choice = int(input("\nSelect an option (1-2):\n"
                                     "1. Request Random APODs\n"
                                     "2. Back\n"))
 
@@ -199,7 +199,7 @@ def get_random_n_apods():
                     list_of_unformatted_apod_entries = []
 
                     if response.status_code == 200:
-                        print(f"Success: {n} Random APOD entries were retrieved 🚀\n")
+                        print(f"Success: {n} Random APODs were retrieved 🚀\n")
                         list_of_unformatted_apod_entries = response.json()
                         for apod in list_of_unformatted_apod_entries:
                             apod = format_apod_data(apod)
@@ -209,10 +209,10 @@ def get_random_n_apods():
                             print("Data directory not found. Creating it now...\n")
                             create_data_directory()
 
-                        print("Saving to CSV log.. 🗄️")
+                        print("Saving to CSV... 🗄️")
                         log_multiple_csv_entries(list_of_formatted_apod_entries)
 
-                        print("Saving to JSONL log.. 🗃️")
+                        print("Saving to JSONL... 🗃️")
                         log_multiple_json_entries(list_of_formatted_apod_entries)
 
 
@@ -228,7 +228,7 @@ def get_random_n_apods():
                                 print(f"APOD link: {redirect_url}")
 
                     elif response.status_code == 404 or response.status_code == 403:
-                        print("Request failed: Check your API key and try again.")
+                        print("Request failed: Verify your API key and try again.")
                         continue
                     elif response.status_code == 500 or response.status_code == 503 or response.status_code == 504:
                         print("NASA API error: Please try again later.")
@@ -241,5 +241,5 @@ def get_random_n_apods():
         except ValueError:
             print("Invalid input: Please enter a number.")
         except Exception as e:
-            print('Unexpected error: Something went wrong. Please try again.')
+            print('Unexpected error: Please try again.')
             print(e)

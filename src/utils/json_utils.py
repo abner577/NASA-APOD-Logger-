@@ -20,11 +20,11 @@ def create_json_output_file():
     """
 
     if check_if_json_output_exists():
-        print(f"File Error: Cannot create file at '{json_file_path}' because it already exists.")
+        print(f"JSONL log already exists: '{json_file_name}'. Skipping creation.")
         return
 
     Path(json_file_path).touch()
-    print(f"Created: '{json_file_name}' ✅")
+    print(f"Created log file: '{json_file_name}' ✅")
 
 
 def clear_json_output_file():
@@ -36,17 +36,18 @@ def clear_json_output_file():
     """
 
     if not check_if_json_output_exists():
-        return
+        return False
 
     try:
         with open(file=json_file_path, mode='w') as json_file:
-            print(f"Cleared: '{json_file_name}'.")
+            return True
 
     except PermissionError:
-        print(f"Permission denied: Unable to write '{json_file_name}' at '{json_file_path}' ❌.")
+        print(f"Permission denied: Unable to write '{json_file_name}' at '{json_file_path}' ❌")
     except Exception as e:
         print(e)
 
+    return False
 
 def delete_json_output_file():
     """
@@ -57,7 +58,7 @@ def delete_json_output_file():
     """
 
     Path(f"{json_file_path}").unlink()
-    print(f"Deleted: '{json_file_name}'.")
+    print(f"Deleted: '{json_file_name}' ✅")
 
 
 def get_line_count(count):
@@ -79,7 +80,7 @@ def get_line_count(count):
     except PermissionError:
         print(f"Permission denied: Unable to read '{json_file_name}' at '{json_file_path}' ❌.")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 
@@ -105,13 +106,13 @@ def check_for_duplicate_json_entries(formatted_apod_data):
 
                 content = json.loads(line)
                 if content['date'] == formatted_apod_data['date']:
-                    print(f"APOD with date: '{content['date']}' found in: '{json_file_name}'. Not logging again ⛔")
+                    print(f"Skipped (duplicate): {content['date']} already exists in {json_file_name} ⛔")
                     return True
 
     except PermissionError:
         print(f"Permission denied: Unable to read '{json_file_name}' at '{json_file_path}' ❌.")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 
@@ -129,7 +130,7 @@ def check_if_json_output_exists():
     if Path(json_file_path).exists() and Path(json_file_path).is_file():
         return True
 
-    print(f"File: '{json_file_name}' at path: '{json_file_path}' not found ❌.")
+    print(f"Log file not found: '{json_file_name}' at '{json_file_path}' ❌")
     return False
 
 
@@ -145,10 +146,13 @@ def format_raw_jsonl_entry(formatted_jsonl_entry, count):
         None:
     """
 
-    print(f"=====================================")
-    print(f"Entry #{count + 1} ({formatted_jsonl_entry['title']}):")
-    print(f"Date: {formatted_jsonl_entry['date']}\n"
-          f"Title: {formatted_jsonl_entry['title']}\n"
-          f"Url: {formatted_jsonl_entry['url']}\n"
-          f"Explanation: {formatted_jsonl_entry['explanation']}\n"
-          f"Logged_At: {formatted_jsonl_entry['logged_at']}")
+    print("=====================================")
+    if count == 0:
+        print()
+    print(
+        f"Date: {formatted_jsonl_entry['date']}\n"
+        f"Title: {formatted_jsonl_entry['title']}\n"
+        f"URL: {formatted_jsonl_entry['url']}\n"
+        f"Explanation: {formatted_jsonl_entry['explanation']}\n"
+        f"Logged at: {formatted_jsonl_entry['logged_at']}\n"
+    )

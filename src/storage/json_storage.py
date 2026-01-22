@@ -56,17 +56,17 @@ def show_first_n_json_log_entries():
     """
 
     try:
-        entries_amount = int(input("Enter the number of log entries you would like to fetch:\n"))
+        entries_amount = int(input("Enter number of entries: "))
 
     except ValueError:
-        print("Please enter a valid number.")
+        print("Invalid input. Enter a valid number.\n")
         return
     except Exception as e:
         print(e)
         return
 
     if entries_amount < 1:
-        print("Invalid input: Number of entries must be at least 1. ❌")
+        print("Invalid input. Enter a number of 1 or more.\n")
         return
 
     if not check_if_json_output_exists():
@@ -75,11 +75,11 @@ def show_first_n_json_log_entries():
     line_count = get_line_count(0)
 
     if line_count == 0:
-        print("No log entries found.")
+        print("\nNo entries found.\n")
         return
 
     if entries_amount > line_count:
-        print(f"Only {line_count} entries exist. Displaying all entries instead.")
+        print(f"Only {line_count} entries available. Showing all.\n")
         entries_amount = line_count
     count = 0
 
@@ -100,7 +100,7 @@ def show_first_n_json_log_entries():
     except PermissionError:
         print(f"Permission denied: Unable to read '{json_file_name}' at '{json_file_path}' ❌")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 
@@ -117,10 +117,10 @@ def show_last_n_json_log_entries():
     """
 
     try:
-        entries_amount = int(input("Enter the number of log entries you would like to fetch:\n"))
+        entries_amount = int(input("Enter number of entries:"))
 
     except ValueError:
-        print("Invalid input: Enter a valid number.")
+        print("Invalid input: Enter a valid number.\n")
         return
     except Exception as e:
         print(e)
@@ -129,7 +129,7 @@ def show_last_n_json_log_entries():
     entries_list = []
 
     if entries_amount < 1:
-        print("Invalid input: Number of entries must be at least 1.")
+        print("Invalid input. Enter a number of 1 or more.\n")
         return
 
     if not check_if_json_output_exists():
@@ -138,11 +138,11 @@ def show_last_n_json_log_entries():
     line_count = get_line_count(count=0)
 
     if line_count == 0:
-        print("No log entries found.")
+        print("\nNo entries found.\n")
         return
 
     if entries_amount > line_count:
-        print(f"Only {line_count} entries exist. Displaying all entries instead.")
+        print(f"Only {line_count} entries available. Showing all.\n")
         entries_amount = line_count
 
     count = 0
@@ -164,7 +164,7 @@ def show_last_n_json_log_entries():
     except PermissionError:
         print(f"Permission denied: Unable to read '{json_file_name}' at '{json_file_path}' ❌")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 
@@ -199,12 +199,12 @@ def show_all_json_entries():
     except PermissionError:
         print(f"Permission denied: Unable to read '{json_file_name}' at '{json_file_path}' ❌")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 
     if count == 0:
-        print("No log entries found.")
+        print("\nNo entries found.\n")
         return
 
 
@@ -225,12 +225,12 @@ def delete_one_json_entry():
         pass
 
     try:
-        year = int(input("Enter a year (YYYY): "))
-        month = int(input("Enter a month (MM): "))
-        day = int(input("Enter a day (DD): "))
+        year = int(input("Year (YYYY): "))
+        month = int(input("Month (MM): "))
+        day = int(input("Day (DD): "))
 
     except ValueError:
-        print("Please enter a valid number.")
+        print("Invalid input. Year, month, and day must be numbers.\n")
         return
     except Exception as e:
         print(e)
@@ -263,11 +263,11 @@ def delete_one_json_entry():
                     entries_to_keep.append(content)
 
             if not found:
-                print(f"This entry was not found ❌.")
+                print(f"\nNo entry found for {target_date} ❌\n")
                 return
 
             else:
-                print(f"Removed entry: {target_date} ✅")
+                print(f"\nDeleted entry: {target_date} ✅\n")
             # Write phase
             with open(file=json_file_path, mode='w') as file:
                 for entry in entries_to_keep:
@@ -276,7 +276,7 @@ def delete_one_json_entry():
     except PermissionError:
         print(f"Permission denied: Unable to read/write '{json_file_name}' at '{json_file_path}' ❌")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 
@@ -309,16 +309,17 @@ def fetch_most_recent_json_apod():
                     most_recent_apod = content
 
             if most_recent_apod is None:
-                print(f"{json_file_name} is empty.")
+                print(f"\nNo entries found in {json_file_name}.\n")
                 return
 
             most_recent_apod = format_apod_data(most_recent_apod)
+            print()
             format_raw_jsonl_entry(most_recent_apod, 0)
 
     except PermissionError:
-        print(f"Permission denied: Unable to write '{json_file_name}' at '{json_file_path}' ❌")
+        print(f"Permission denied: Unable to read '{json_file_name}' at '{json_file_path}' ❌")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 
@@ -355,13 +356,14 @@ def fetch_oldest_json_apod():
                 print(f"{json_file_name} is empty.")
                 return
 
-            most_recent_apod = format_apod_data(oldest_apod)
+            oldest_apod = format_apod_data(oldest_apod)
+            print()
             format_raw_jsonl_entry(oldest_apod, 0)
 
     except PermissionError:
         print(f"Permission denied: Unable to write '{json_file_name}' at '{json_file_path}' ❌")
     except json.decoder.JSONDecodeError:
-        print(f"JSON Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
+        print(f"JSONL parse Error: Could not decode JSON from file '{json_file_name}'. Check the file format.")
     except Exception as e:
         print(e)
 

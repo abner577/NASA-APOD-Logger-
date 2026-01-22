@@ -28,11 +28,11 @@ def create_csv_output_file():
     """
 
     if check_if_csv_output_exists():
-        print(f"File Error: Cannot create file '{csv_file_name}' because it already exists.")
+        print(f"CSV log already exists: '{csv_file_name}'. Skipping creation.")
 
     Path(csv_file_path).touch()
     write_header_to_csv()
-    print(f"Created: '{csv_file_name}' ✅")
+    print(f"Created log file: '{csv_file_name}' ✅")
 
 
 def clear_csv_output_file():
@@ -43,14 +43,19 @@ def clear_csv_output_file():
            None:
     """
 
+    if not check_if_csv_output_exists():
+        return False
+
     try:
         with open(file=csv_file_path, mode='w', encoding='utf-8') as csv_file:
-            print(f"Cleared: '{csv_file_name}'.")
+            return True
 
     except PermissionError:
         print(f"Permission denied: Unable to write '{csv_file_name}' at '{csv_file_path}' ❌")
     except Exception as e:
         print(e)
+
+    return False
 
 
 def delete_csv_output_file():
@@ -62,7 +67,7 @@ def delete_csv_output_file():
     """
 
     Path(f"{csv_file_path}").unlink()
-    print(f"Deleted: '{csv_file_name}'.")
+    print(f"Deleted: '{csv_file_name}' ✅")
 
 
 def write_header_to_csv():
@@ -104,7 +109,7 @@ def check_for_duplicate_csv_entries(formatted_apod_data):
                   continue
 
               if row[0] == formatted_apod_data['date']:
-                   print(f"APOD with date: '{formatted_apod_data['date']}' found in: '{csv_file_name}'. Not logging again ⛔")
+                   print(f"Skipped (duplicate): {formatted_apod_data['date']} already exists in {csv_file_name} ⛔")
                    return True
 
     except PermissionError:

@@ -54,20 +54,19 @@ def nasa_apods_menu():
     while flag:
         print(
             "\n======================= NASA APOD Requests 🌌 =======================\n"
-            "Fetch Astronomy Picture of the Day (APOD) entries from NASA.\n"
-            "Pick an option (1-4):"
-        )
+            "Fetch Astronomy Picture of the Day (APOD) entries from NASA.\n")
+        print("Select an option (1-4):")
 
         try:
             user_choice = int(input(
-                "1. Fetch today’s APOD\n"
-                "2. Fetch APOD by date\n"
-                "3. Fetch random APODs\n"
-                "4. Back to Main Menu\n"
+                "1. Today’s APOD\n"
+                "2. APOD by date\n"
+                "3. Random APODs\n"
+                "4. Return to Main Menu\n"
             ))
         except ValueError:
-            print("Please enter a number (1-4).")
-            return
+            print("Invalid input: Please enter a number from 1 to 4.")
+            continue
         except Exception as e:
             print(e)
             return
@@ -80,7 +79,7 @@ def nasa_apods_menu():
             case 3:
                 get_random_n_apods()
             case 4:
-                print("Returning to Main Menu...")
+                print("\nReturning to Main Menu...")
                 flag = False
 
 
@@ -89,24 +88,23 @@ def output_files_menu():
     while flag:
         print(
             "\n======================= Log & File Tools 🗃️ =======================\n"
-            "View, manage, and maintain your saved APOD logs.\n"
-            "Pick an option (1-9):"
-        )
+            "View, manage, and maintain your saved APOD logs.\n")
+        print("Select an option (1-9):")
 
         try:
             user_choice = int(input(
                 "1. View first N entries\n"
                 "2. View last N entries\n"
                 "3. View all entries\n"
-                "4. Delete an entry by date\n"
-                "5. Show most recent APOD (by date)\n"
-                "6. Show oldest APOD (by date)\n"
+                "4. Delete entry by date\n"
+                "5. Show most recent entry (by date)\n"
+                "6. Show oldest entry (by date)\n"
                 "7. Clear logs (CSV + JSONL)\n"
                 "8. Count logged entries\n"
-                "9. Back to Main Menu\n"
+                "9. Return to Main Menu\n"
             ))
         except ValueError:
-            print("Please enter a number (1-9).")
+            print("Invalid input: Please enter a number from 1 to 9.")
             return
         except Exception as e:
             print(e)
@@ -126,11 +124,11 @@ def output_files_menu():
             case 6:
                 fetch_oldest_json_apod()
             case 7:
-                clear_csv_output_file()
-                clear_json_output_file()
+                if clear_json_output_file() and clear_csv_output_file():
+                    print("\nAll log files have been cleared.\n")
             case 8:
                 line_count = get_line_count(0)
-                print(f"You have {line_count} logged entries.\n")
+                print(f"\nTotal logged entries: {line_count}\n")
             case 9:
                 print("Returning to Main Menu...")
                 flag = False
@@ -141,18 +139,17 @@ def user_settings_menu():
     while flag:
         print(
             "\n======================= Preferences 📃 =======================\n"
-            "Manage how the app behaves after fetching APOD entries.\n"
-            "Pick an option (1-3):"
-        )
+            "Manage how the app behaves after fetching APOD entries.\n")
+        print("Select an option (1-3):")
 
         try:
             user_choice = int(input(
-                "1. View redirect setting\n"
-                "2. Change redirect setting\n"
-                "3. Back to Main Menu\n"
+                "1. View auto-open setting\n"
+                "2. Change auto-open setting\n"
+                "3. Return to Main Menu\n"
             ))
         except ValueError:
-            print("Please enter a number (1-3).")
+            print("Invalid input: Please enter a number from 1 to 3.")
             return
         except Exception as e:
             print(e)
@@ -161,11 +158,11 @@ def user_settings_menu():
         match user_choice:
             case 1:
                 if get_user_settings():
-                    print("Auto-open in browser: ON ✅")
+                    print("Auto-open in browser: ON ✅\n")
                 else:
-                    print("Auto-open in browser: OFF ❌")
+                    print("Auto-open in browser: OFF ❌\n")
             case 2:
                 update_user_settings()
             case 3:
-                print("Returning to Main Menu...")
+                print("\nReturning to Main Menu...\n")
                 flag = False

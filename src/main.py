@@ -30,11 +30,11 @@ while flag:
 
 
     try:
-        print('Pick an option (1-4):')
+        print('Select an option (1-4):')
         user_choice = int(input("1. Make a NASA APOD Request\n"
-                                "2. Interact with Log & File Tools\n"
+                                "2. View/Manage saved logs\n"
                                 "3. Change Setting\n"
-                                "4. Quit Main Menu\n"))
+                                "4. Goodbye 👋\n"))
 
         match user_choice:
             case 1:
@@ -51,6 +51,6 @@ while flag:
                 flag = False
 
     except ValueError:
-        print("Please enter a number (1-4).")
+        print("Invalid input: Please enter a number from 1 to 4.")
     except Exception as e:
         print(e)

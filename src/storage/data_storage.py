@@ -31,11 +31,11 @@ def create_data_directory():
     """
 
     if check_if_data_exists():
-        print("Directory 'data' already exists ❌")
+        print("Data directory already exists. Skipping creation")
         return
 
     Path(f"{DIR_PATH}/data").mkdir(parents=True, exist_ok=True)
-    print("Directory 'data' created ✅")
+    print("\nCreated data directory ✅\n")
 
 
 

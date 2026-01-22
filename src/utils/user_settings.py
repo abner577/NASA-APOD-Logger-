@@ -13,7 +13,7 @@ def check_if_user_settings_exist():
 
 def create_user_settings():
     if check_if_user_settings_exist():
-        print(f"File '{user_settings_name}' already exists, skipping creation.")
+        print(f"Settings file already exists: '{user_settings_name}'. Skipping.")
         return
 
     Path(user_settings_path).touch()
@@ -22,23 +22,23 @@ def create_user_settings():
         with open(file=user_settings_path, mode="w", encoding="utf-8") as file:
             file.write(json.dumps(default_settings, ensure_ascii=False) + "\n")
     except PermissionError:
-        print(f"Dont have permission to write to file: '{user_settings_name}' at path: '{user_settings_path}'.")
+        print(f"Permission denied: Unable to write '{user_settings_name}' at '{user_settings_path}' ❌")
     except Exception as e:
         print(e)
 
-    print(f"File '{user_settings_name}' created ✅.")
+    print(f"Created settings file: '{user_settings_name}' ✅\n")
 
 
 def update_user_settings():
     if not check_if_user_settings_exist():
-        print(f"File '{user_settings_name}' does not exist. Create it before proceeding.")
+        print(f"Settings file not found: '{user_settings_name}'. Please create it first.")
         return
 
     try:
-        updated_setting = input('Type "yes" to open APOD links automatically, or "no" to disable: ').strip().lower()
+        updated_setting = input('Auto-open APOD links in your browser? Type "yes" or "no": ').strip().lower()
 
         if updated_setting != "yes" and updated_setting != "no":
-            print('Please enter "yes" or "no".')
+            print('Invalid input. Please enter "yes" or "no".\n')
             return
 
     except Exception as e:
@@ -56,12 +56,12 @@ def update_user_settings():
     except Exception as e:
         print(e)
 
-    print(f"Successfully updated '{user_settings_name}' ✅.")
+    print(f"Updated settings: '{user_settings_name}' ✅\n")
 
 
 def get_user_settings():
     if not check_if_user_settings_exist():
-        print(f"File '{user_settings_name}' does not exist. Create it before proceeding.")
+        print(f"Settings file not found: '{user_settings_name}'. Please create it first.")
         return False
 
     try:
@@ -71,7 +71,7 @@ def get_user_settings():
                 return content.get("automatically_redirect") == "yes"
 
     except PermissionError:
-        print(f"Dont have permission to read from file: '{user_settings_name}' ❌.")
+        print(f"Permission denied: Unable to write '{user_settings_name}' at '{user_settings_path}' ❌")
     except Exception as e:
         print(e)
 

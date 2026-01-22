@@ -53,10 +53,10 @@ def show_first_n_csv_log_entries():
         None:
     """
     try:
-        entries_amount = int(input("Enter the number of log entries you would like to fetch:\n"))
+        entries_amount = int(input("Enter number of entries: "))
 
     except ValueError:
-        print("Please enter a valid number.")
+        print("Invalid input: Enter a valid number.\n")
         return
     except Exception as e:
         print(e)
@@ -64,7 +64,7 @@ def show_first_n_csv_log_entries():
 
 
     if entries_amount < 1:
-        print("Invalid input: Number of entries must be at least 1. ❌")
+        print("Invalid input. Enter a number of 1 or more.\n")
         return
 
     if not check_if_csv_output_exists():
@@ -73,11 +73,11 @@ def show_first_n_csv_log_entries():
     line_count = get_line_count(count=0)
 
     if line_count == 0:
-        print("No log entries found.")
+        print("\nNo entries found.\n")
         return
 
     if entries_amount > line_count:
-        print(f"Only {line_count} entries exist. Displaying all entries instead.")
+        print(f"Only {line_count} entries available. Showing all.\n")
         entries_amount = line_count
     count = 0
 
@@ -113,10 +113,10 @@ def show_last_n_csv_log_entries():
     """
 
     try:
-        entries_amount = int(input("Enter the number of log entries you would like to fetch:\n"))
+        entries_amount = int(input("Enter number of entries: "))
 
     except ValueError:
-        print("Invalid input: Enter a valid number.")
+        print("Invalid input: Enter a valid number.\n")
         return
     except Exception as e:
         print(e)
@@ -125,7 +125,7 @@ def show_last_n_csv_log_entries():
     entries_list = []
 
     if entries_amount < 1:
-        print("Invalid input: Number of entries must be at least 1.")
+        print("Invalid input. Enter a number of 1 or more.\n")
         return
 
     if not check_if_csv_output_exists():
@@ -134,11 +134,11 @@ def show_last_n_csv_log_entries():
     line_count = get_line_count(count=0)
 
     if line_count == 0:
-        print("No log entries found.")
+        print("N\nNo entries found.\n")
         return
 
     if entries_amount > line_count:
-        print(f"Only {line_count} entries exist. Displaying all entries instead.")
+        print(f"Only {line_count} entries available. Showing all.\n")
         entries_amount = line_count
     count = 0
 
@@ -198,7 +198,7 @@ def show_all_csv_entries():
         print(e)
 
     if count == 0:
-        print("No log entries found.")
+        print("\nNo entries found.\n")
         return
 
 
@@ -219,12 +219,12 @@ def delete_one_csv_entry():
         return
 
     try:
-        year = int(input("Enter a year (YYYY): "))
-        month = int(input("Enter a month (MM): "))
-        day = int(input("Enter a day (DD): "))
+        year = int(input("Year (YYYY): "))
+        month = int(input("Month (MM): "))
+        day = int(input("Day (DD): "))
 
     except ValueError:
-        print("Please enter a valid number.")
+        print("Invalid input. Year, month, and day must be numbers.\n")
         return
     except Exception as e:
         print(e)
@@ -253,7 +253,7 @@ def delete_one_csv_entry():
                 entries_to_keep.append(row)
 
         if not found:
-            print("This entry was not found ❌.")
+            print("\nNo entry found for {target_date} ❌\n")
             return
 
         # Write phase
@@ -263,7 +263,7 @@ def delete_one_csv_entry():
             writer.writeheader()
             writer.writerows(entries_to_keep)
 
-        print(f"Removed entry: {target_date} ✅")
+        print(f"\nDeleted entry: {target_date} ✅\n")
 
     except PermissionError:
         print(f"Permission denied: Unable to read/write '{csv_file_name}' at '{csv_file_path}' ❌")
@@ -299,10 +299,10 @@ def fetch_most_recent_csv_apod():
                     most_recent_apod = row
 
             if most_recent_apod is None:
-                print(f"{csv_file_name} is empty.")
+                print(f"\nNo entries found in {csv_file_name}.\n")
                 return
 
-
+            print()
             format_raw_csv_entry(most_recent_apod, 0)
 
     except PermissionError:
@@ -339,10 +339,10 @@ def fetch_oldest_csv_apod():
                     oldest_apod = row
 
             if oldest_apod is None:
-                print(f"{csv_file_name} is empty ❌.")
+                print(f"nNo entries found in {csv_file_name}.\n")
                 return
 
-
+            print()
             format_raw_csv_entry(oldest_apod, 0)
 
     except PermissionError:
