@@ -4,8 +4,7 @@ data_storage.py
 Handles detection and creation of the application's data directory.
 """
 
-from pathlib import Path
-from src.config import DIR_PATH
+from src.config import DATA_DIR
 
 
 def check_if_data_exists():
@@ -16,10 +15,7 @@ def check_if_data_exists():
           bool: True if the data directory exists, otherwise False.
     """
 
-    if Path(f"{DIR_PATH}/data").is_dir():
-        return True
-    else:
-        return False
+    return DATA_DIR.is_dir()
 
 
 def create_data_directory():
@@ -34,8 +30,5 @@ def create_data_directory():
         print("Data directory already exists. Skipping creation")
         return
 
-    Path(f"{DIR_PATH}/data").mkdir(parents=True, exist_ok=True)
-    print("\nCreated data directory ✅\n")
-
-
-
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    print("\nCreated data directory ✅")

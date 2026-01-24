@@ -34,7 +34,7 @@ def get_todays_apod():
             None:
     """
 
-    print("Fetching today's APOD...")
+    print("\nFetching today's APOD...")
 
     full_url = f"{BASE_URL}?api_key={NASA_API_KEY}"
     print(f"[DEBUG] Full_url: {full_url}")
@@ -50,10 +50,7 @@ def get_todays_apod():
             print("Data directory not found. Creating it...\n")
             create_data_directory()
 
-        print("Saving to CSV... 🗄️")
         log_data_to_csv(apod_data)
-
-        print("Saving to JSONL... 🗃️")
         log_data_to_json(apod_data)
 
         redirect_url = apod_data['url']
@@ -102,7 +99,7 @@ def get_apod_for_specific_day():
             case 1:
                 # Catch non-numeric input here (e.g., "Jan")
                 try:
-                    year = int(input("Year (YYYY): "))
+                    year = int(input("\nYear (YYYY): "))
                     month = int(input("Month (MM): "))
                     day = int(input("Day (DD): "))
                 except ValueError:
@@ -128,7 +125,7 @@ def get_apod_for_specific_day():
 
                 # Valid date at this point
                 full_url = f"{BASE_URL}?api_key={NASA_API_KEY}&date={date_object}"
-                print(f"Fetching APOD for {date_object}...")
+                print(f"\nFetching APOD for {date_object}...")
                 response = requests.get(full_url)
 
                 if response.status_code == 200:
@@ -136,10 +133,7 @@ def get_apod_for_specific_day():
                     apod_data = response.json()
                     apod_data = format_apod_data(apod_data)
 
-                    print("Saving to CSV... 🗄️")
                     log_data_to_csv(apod_data)
-
-                    print("Saving to JSONL... 🗃️")
                     log_data_to_json(apod_data)
 
                     redirect_url = apod_data['url']
@@ -182,14 +176,14 @@ def get_random_n_apods():
 
             match user_choice:
                 case 1:
-                    n = int(input('How many random APODs should we fetch? (1-20): \n'))
+                    n = int(input('\nHow many random APODs should we fetch? (1-20): \n'))
 
                     # Max of 20, because we don't want to open like 100 tabs in the users browser and cause a crash.
                     if not (0 < n <= 20):
                         print("Invalid input: Number of APODs must be between 1 and 20.")
                         continue
 
-                    print(f"Fetching {n} random APODs...")
+                    print(f"\nFetching {n} random APODs...")
 
                     full_url = f"{BASE_URL}?api_key={NASA_API_KEY}&count={n}"
                     print(f"[DEBUG] Request URL: {full_url}")
@@ -209,12 +203,8 @@ def get_random_n_apods():
                             print("Data directory not found. Creating it now...\n")
                             create_data_directory()
 
-                        print("Saving to CSV... 🗄️")
                         log_multiple_csv_entries(list_of_formatted_apod_entries)
-
-                        print("Saving to JSONL... 🗃️")
                         log_multiple_json_entries(list_of_formatted_apod_entries)
-
 
                         if get_user_settings():
                             print()

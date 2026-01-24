@@ -1,3 +1,6 @@
+import os
+import shutil
+import subprocess
 import webbrowser
 
 """
@@ -6,17 +9,37 @@ browser_utils.py
 Browser-related helper utilities for user navigation.
 """
 
-def take_user_to_browser(url):
-    """
-      Open the APOD URL in the user's default web browser.
+def _is_wsl() -> bool:
+    # WSL detection
+    try:
+        return "microsoft" in os.uname().release.lower() or "wsl" in os.uname().release.lower()
+    except AttributeError:
+        return False
 
-      Returns:
-       None:
-    """  # For Windows
+
+def take_user_to_browser(url: str) -> None:
+    """
+    Open the APOD URL in the user's default web browser.
+    Works on Windows/macOS/Linux and WSL.
+
+    Returns:
+        None
+    """
+    print(f"Opening in browser 🌐: {url}")
 
     try:
-        print(f"Opening in browser 🌐: {url}")
+        # If running in WSL, use Windows to open the URL
+        if _is_wsl():
+            if shutil.which("wslview"):
+                subprocess.run(["wslview", url], check=False)
+                return
+
+            # Fallback: Windows start command
+            subprocess.run(["cmd.exe", "/c", "start", "", url], check=False)
+            return
+
         webbrowser.open_new_tab(url)
 
-    except webbrowser.Error:
-        print("Browser error: Unable to open the link in a new tab.")
+    except Exception as e:
+        print(f"Browser error: Unable to open the link. ({e})")
+        print(f"URL: {url}")

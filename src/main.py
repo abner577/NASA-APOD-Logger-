@@ -12,22 +12,23 @@ print('Startup Banner & Startup Art Here')
 # startup_banner()
 # startup_art()
 
+if not check_if_data_exists():
+    create_data_directory()
+
+if not check_if_user_settings_exist():
+    create_user_settings()
+
+if not check_if_json_output_exists():
+    create_json_output_file()
+
+if not check_if_csv_output_exists():
+    create_csv_output_file()
+    print()
+
+
 flag = True
 while flag:
     print('\n======================= Main Menu ☄️ =======================')
-
-    if not check_if_data_exists():
-        create_data_directory()
-
-    if not check_if_user_settings_exist():
-        create_user_settings()
-
-    if not check_if_json_output_exists():
-        create_json_output_file()
-
-    if not check_if_csv_output_exists():
-        create_csv_output_file()
-
 
     try:
         print('Select an option (1-4):')
@@ -47,7 +48,7 @@ while flag:
                 user_settings_menu()
 
             case 4:
-                print("Exiting Main Menu...")
+                print("\nExiting Main Menu...")
                 flag = False
 
     except ValueError:

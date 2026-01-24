@@ -53,7 +53,7 @@ def show_first_n_csv_log_entries():
         None:
     """
     try:
-        entries_amount = int(input("Enter number of entries: "))
+        entries_amount = int(input("\nEnter number of entries: "))
 
     except ValueError:
         print("Invalid input: Enter a valid number.\n")
@@ -113,7 +113,7 @@ def show_last_n_csv_log_entries():
     """
 
     try:
-        entries_amount = int(input("Enter number of entries: "))
+        entries_amount = int(input("\nEnter number of entries: "))
 
     except ValueError:
         print("Invalid input: Enter a valid number.\n")
@@ -219,7 +219,7 @@ def delete_one_csv_entry():
         return
 
     try:
-        year = int(input("Year (YYYY): "))
+        year = int(input("\nYear (YYYY): "))
         month = int(input("Month (MM): "))
         day = int(input("Day (DD): "))
 

@@ -26,7 +26,7 @@ def create_user_settings():
     except Exception as e:
         print(e)
 
-    print(f"Created settings file: '{user_settings_name}' ✅\n")
+    print(f"Created settings file: '{user_settings_name}' ✅")
 
 
 def update_user_settings():
@@ -76,4 +76,3 @@ def get_user_settings():
         print(e)
 
     return False
-

@@ -29,6 +29,7 @@ def create_csv_output_file():
 
     if check_if_csv_output_exists():
         print(f"CSV log already exists: '{csv_file_name}'. Skipping creation.")
+        return
 
     Path(csv_file_path).touch()
     write_header_to_csv()
@@ -131,7 +132,6 @@ def check_if_csv_output_exists():
     if Path(csv_file_path).exists() and Path(csv_file_path).is_file():
         return True
 
-    print(f"File Error: File: '{csv_file_name}' at path: '{csv_file_path}' not found ❌.")
     return False
 
 
