@@ -84,9 +84,11 @@ def get_apod_for_specific_day():
 
         # Catch non-numeric input here (e.g., "abc")
         try:
-            user_choice = int(input("\nSelect an option (1-2):\n"
-                                    "1. Enter a date\n"
-                                    "2. Back\n"))
+            user_choice = int(input(
+                "\n[1] Enter a date\n"
+                "[2] Back\n\n"
+                "Option: "
+            ))
         except ValueError:
             print("Invalid input: Please enter 1 or 2.")
             continue
@@ -166,9 +168,11 @@ def get_random_n_apods():
     flag = True
     while flag:
         try:
-            user_choice = int(input("\nSelect an option (1-2):\n"
-                                    "1. Request Random APODs\n"
-                                    "2. Back\n"))
+            user_choice = int(input(
+                "\n[1] Request Random APODs\n"
+                "[2] Back\n\n"
+                "Option: "
+            ))
 
             if user_choice != 1 and user_choice != 2:
                 print("Invalid option: Please enter 1 or 2.")

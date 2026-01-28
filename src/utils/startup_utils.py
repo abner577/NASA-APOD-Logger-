@@ -1,4 +1,5 @@
 from src.nasa_client import *
+from src.utils.user_settings import *
 
 
 def startup_banner():
@@ -55,15 +56,15 @@ def nasa_apods_menu():
     while flag:
         print(
             "\n======================= NASA APOD Requests 🌌 =======================\n"
-            "Fetch Astronomy Picture of the Day (APOD) entries from NASA.\n")
-        print("Select an option (1-4):")
+            "     Fetch Astronomy Picture of the Day (APOD) entries from NASA.\n")
 
         try:
             user_choice = int(input(
-                "1. Today’s APOD\n"
-                "2. APOD by date\n"
-                "3. Random APODs\n"
-                "4. Return to Main Menu\n"
+                "[1] Today’s APOD\n"
+                "[2] APOD by date\n"
+                "[3] Random APODs\n"
+                "[4] Return to Main Menu\n\n"
+                "Option: "
             ))
         except ValueError:
             print("Invalid input: Please enter a number from 1 to 4.")
@@ -89,21 +90,18 @@ def output_files_menu():
     while flag:
         print(
             "\n======================= Log & File Tools 🗃️ =======================\n"
-            "View, manage, and maintain your saved APOD logs.\n")
-        print("Select an option (1-9):")
+            "         View, manage, and maintain your saved APOD logs\n")
 
         try:
             user_choice = int(input(
-                "1. View first N entries\n"
-                "2. View last N entries\n"
-                "3. View all entries\n"
-                "4. Delete entry by date\n"
-                "5. Show most recent entry (by date)\n"
-                "6. Show oldest entry (by date)\n"
-                "7. Clear logs (CSV + JSONL)\n"
-                "8. Count logged entries\n"
-                "9. Return to Main Menu\n"
+                "[1] View first N entries           [6] Show oldest entry (by date)\n"
+                "[2] View last N entries            [7] Clear logs (CSV + JSONL)\n"
+                "[3] View all entries               [8] Count logged entries\n"
+                "[4] Delete entry by date           [9] Return to Main Menu\n"
+                "[5] Show most recent entry (by date)\n\n"
+                "Option: "
             ))
+
         except ValueError:
             print("Invalid input: Please enter a number from 1 to 9.")
             return
@@ -140,14 +138,14 @@ def user_settings_menu():
     while flag:
         print(
             "\n======================= Preferences 📃 =======================\n"
-            "Manage how the app behaves after fetching APOD entries.\n")
-        print("Select an option (1-3):")
+            "   Manage how the app behaves after fetching APOD entries.\n")
 
         try:
             user_choice = int(input(
-                "1. View auto-open setting\n"
-                "2. Change auto-open setting\n"
-                "3. Return to Main Menu\n"
+                "[1] View auto-open setting\n"
+                "[2] Change auto-open setting\n"
+                "[3] Return to Main Menu\n\n"
+                "Option: "
             ))
         except ValueError:
             print("Invalid input: Please enter a number from 1 to 3.")
